@@ -34,7 +34,9 @@ console.log("Error:", error);
     zone: data[0].zone,
     delivery_min: data[0].delivery_min,
     delivery_max: data[0].delivery_max,
-    cod_available: data[0].cod_available
+    cod_available: data[0].cod_available,
+	state: data[0].state,
+	district: data[0].district
   });
 });
 

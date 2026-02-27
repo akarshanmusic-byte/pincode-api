@@ -22,12 +22,28 @@ const { data, error } = await supabase
   .select("*")
   .eq("pincode", pincode);
 
+
 console.log("Data returned:", data);
 console.log("Error:", error);
 
   if (error || !data) {
     return res.json({ serviceable: false });
   }
+
+// Log pincode search (upsert logic)
+await supabase
+  .from("pincode_search_logs")
+  .upsert(
+    {
+      pincode: pincode,
+      last_searched_at: new Date()
+    },
+    { onConflict: "pincode" }
+  );
+
+await supabase.rpc("increment_pincode_search", {
+  input_pincode: pincode
+});
 
   res.json({
     serviceable: true,

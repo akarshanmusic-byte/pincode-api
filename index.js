@@ -31,13 +31,11 @@ console.log("Error:", error);
   }
 
 // Log pincode search (upsert logic)
+
 await supabase
   .from("pincode_search_logs")
   .upsert(
-    {
-      pincode: pincode,
-      last_searched_at: new Date()
-    },
+    { pincode: pincode },
     { onConflict: "pincode" }
   );
 
